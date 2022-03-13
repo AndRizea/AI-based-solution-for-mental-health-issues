@@ -58,6 +58,14 @@ def clean_data(training_data, threshold):
                 training_set.append((sentence, label))
     return training_set
 
+def encode_sentence(all_words, sentence, bag):
+    for sentence_word in sentence:
+        stemmed_word = stemmer.stem(sentence_word)
+        for i, word in enumerate(all_words):
+            if stemmed_word == word:
+                bag[i] = 1
+    return bag
+
 def bag_of_words(data):
     training_set = []
     all_words = []
@@ -74,13 +82,7 @@ def bag_of_words(data):
 
     return training_set, all_words
 
-def encode_sentence(all_words, sentence, bag):
-    for sentence_word in sentence:
-        stemmed_word = stemmer.stem(sentence_word)
-        for i, word in enumerate(all_words):
-            if stemmed_word == word:
-                bag[i] = 1
-    return bag
+
 
 
 
