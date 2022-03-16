@@ -1,11 +1,12 @@
 import pandas as pd
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import re
 import emoji
 import string
 import contractions
+import seaborn as sn
 import random
 import nltk
 from nltk.tokenize import word_tokenize
@@ -17,24 +18,29 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 #nltk.download('wordnet')
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 
 #LOAD AND ANALYZE THE DATASET
-df_all = pd.read_csv("Data/all_training_data.txt", sep="	", header=None)
-df_all.columns = ["id", "tweet_text", "sentiment", "threshold"]
+df_dataset = pd.read_csv("Data/all_data.txt", sep="	", header=None)
+df_dataset.columns = ["id", "tweet_text", "sentiment", "threshold"]
 
-# distribution of sentiments in the dataset
-sentiment_count = df_all["sentiment"].value_counts()
+# distribution of sentiments in the training dataset
+sentiment_count = df_dataset["sentiment"].value_counts()
 plt.pie(sentiment_count, labels=sentiment_count.index,
         autopct='%1.1f%%', shadow=True, startangle=140)
+plt.title("Distribution of sentiments in the training dataset")
 #plt.show()
 
-df_training_anger = df_all[df_all["sentiment"] == "anger"]
-df_training_fear = df_all[df_all["sentiment"] == "fear"]
-df_training_joy = df_all[df_all["sentiment"] == "joy"]
-df_training_sadness = df_all[df_all["sentiment"] == "sadness"]
+df_training_anger = df_dataset[df_dataset["sentiment"] == "anger"]
+df_training_fear = df_dataset[df_dataset["sentiment"] == "fear"]
+df_training_joy = df_dataset[df_dataset["sentiment"] == "joy"]
+df_training_sadness = df_dataset[df_dataset["sentiment"] == "sadness"]
 
 #WordClouds - What are the words most often present in expressing a certain type of emotion?
-pos_tweets = df_all[df_all["sentiment"] == "anger"]
+pos_tweets = df_dataset[df_dataset["sentiment"] == "anger"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
@@ -42,7 +48,7 @@ plt.axis("off")
 plt.title("Words used often to describe anger")
 #plt.show()
 
-pos_tweets = df_all[df_all["sentiment"] == "fear"]
+pos_tweets = df_dataset[df_dataset["sentiment"] == "fear"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
@@ -50,7 +56,7 @@ plt.axis("off")
 plt.title("Words used often to describe fear")
 #plt.show()
 
-pos_tweets = df_all[df_all["sentiment"] == "joy"]
+pos_tweets = df_dataset[df_dataset["sentiment"] == "joy"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
@@ -58,7 +64,7 @@ plt.axis("off")
 plt.title("Words used often to describe joy")
 #plt.show()
 
-pos_tweets = df_all[df_all["sentiment"] == "sadness"]
+pos_tweets = df_dataset[df_dataset["sentiment"] == "sadness"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
@@ -151,14 +157,15 @@ def process_text(text, verbose=False):
 
         return stem
 
-# TEXT REPRESENTATION
-df_all["tokens"] = df_all["tweet_text"].apply(process_text)
-df_all["sentiment_score"] = df_all["sentiment"].apply(lambda i: 1 if i == "joy" else (0.75 if i == "anger" else (0.5 if i == "fear" else 0)))
+# TEXT VECTORIZATION
+df_dataset["tokens"] = df_dataset["tweet_text"].apply(process_text)
+df_dataset["sentiment_score"] = df_dataset["sentiment"].apply(lambda i: 1 if i == "joy" else (0.67 if i == "anger" else (0.33 if i == "fear" else 0)))
 #print(df_all.head(10))
 #df_all.to_csv("Data/all_training_data.csv")
 
-X = df_all["tokens"].tolist()
-y = df_all["sentiment_score"].tolist()
+X= df_dataset["tokens"].tolist()
+y = df_dataset["sentiment_score"].tolist()
+
 
 #TF-IDF
 def fit_tfidf(text_corpus):
@@ -166,3 +173,64 @@ def fit_tfidf(text_corpus):
         tf_vectorizer.fit(text_corpus)
         return tf_vectorizer
 
+#SENTIMENT ANALYSIS
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    random_state=0,
+                                                    train_size=0.80)
+
+#y_test = np.asarray(y_test)
+#y_test = y_test.astype('float')
+#print(y_train)
+#y_train = y_train.astype('float32')
+#print(type(y_train))
+#print(type(y_train[7]))
+
+#print("Size of X_train: {}".format(len(X_train)))
+#print("Size of y_train: {}".format(len(y_train)))
+#print("\n")
+#print("Size of X_test: {}".format(len(X_test)))
+#print("Size of y_test: {}".format(len(y_test)))
+#print("\n")
+#print("Train proportion: {:.0%}".format(len(X_train) / (len(X_train) + len(X_test))))
+
+def plot_confusion(cm):
+        plt.figure(figsize = (5,5))
+        sn.heatmap(cm, annot=True, cmap="Blues", fmt='.0f')
+        plt.xlabel("Prediction")
+        plt.ylabel("True value")
+        plt.title("Confusion Matrix")
+        return sn
+
+def logistic_regression(X_train, y_train):
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+        return model
+
+tf_idf = fit_tfidf(X_train)
+X_train_tf = tf_idf.transform(X_train)
+X_test_tf = tf_idf.transform(X_test)
+final_model= logistic_regression(X_train_tf, y_train)
+
+
+user_text = "Turn off the light when you leave the room!"
+def predict_text(text):
+        processed_text = process_text(text)
+        transformed_text = tf_idf.transform([processed_text])
+        prediction = final_model.predict(transformed_text)
+        print(prediction)
+
+        if prediction >= 1:
+                print("Prediction is: joy")
+        else:
+                if ((prediction >= 0.67) and (prediction < 1)):
+                        print("Prediction is: anger")
+                else:
+                        if ((prediction >= 0.33) and (prediction < 0.67)):
+                                print("Prediction is: fear")
+                        else:
+                                if prediction < 0.33:
+                                        print("Prediction is: sadness")
+
+
+print("User message: {}".format(user_text))
+predict_text(user_text)
