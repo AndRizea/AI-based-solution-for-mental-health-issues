@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from nltk.stem.snowball import SnowballStemmer
 from sklearn.model_selection import train_test_split
-import functions as function
+import sentiment_analysis_functions as function
 
 # LOAD AND ANALYZE THE DATASET
 df_dataset = pd.read_csv("Data/all_data.txt", sep="	", header=None)
@@ -85,27 +85,154 @@ X_train_tf = tf_idf.transform(X_train)
 X_test_tf = tf_idf.transform(X_test)
 final_model = function.logistic_regression(X_train_tf, y_train)
 
-user_text = "i am terrified of heights"
+user_text = "The war in Ukraine is getting more and more deadly, I wish I could help more people 🙁"
 
+forms_data = pd.read_csv("Data/Artificial Intelligence (AI) Based Solution for Mental Health Issues.csv")
+forms_data_sadness = forms_data["Say something that may express sadness"]
+forms_data_fear = forms_data["Say something that may express fear"]
+forms_data_anger = forms_data["Say something that may express anger"]
+forms_data_joy = forms_data["Say something that may express joy"]
+
+print(forms_data_sadness)
 
 def predict_text(text):
     processed_text = function.process_text(text)
     transformed_text = tf_idf.transform([processed_text])
     prediction = final_model.predict(transformed_text)
-    print(prediction)
+    #print(prediction)
 
     if prediction >= 1:
-        print("Prediction is: joy")
+        message = "Prediction is: joy"
     else:
         if (prediction >= 0.67) and (prediction < 1):
-            print("Prediction is: anger")
+            message = "Prediction is: anger"
         else:
             if (prediction >= 0.33) and (prediction < 0.67):
-                print("Prediction is: fear")
+                message = "Prediction is: fear"
             else:
                 if prediction < 0.33:
-                    print("Prediction is: sadness")
+                    message = "Prediction is: sadness"
+
+    return prediction, message
 
 
-print("User message: {}".format(user_text))
-predict_text(user_text)
+print("-------------------------IT SHOULD BE SADNESS-----------------------------")
+predict_fear_instead_of_sadness = 0
+predict_anger_instead_of_sadness = 0
+predict_joy_instead_of_sadness = 0
+ok = 0
+for i in range(0, len(forms_data_sadness)):
+    prediction_score = 0
+    print("User message: {}".format(forms_data_sadness[i]))
+    predict_text(forms_data_sadness[i])
+    prediction_score, prediction_text = predict_text(forms_data_sadness[i])
+    print("Score: {}".format(prediction_score))
+    print("Prediction: {}".format(prediction_text))
+    print("\n")
+    if prediction_text == "Prediction is: fear":
+        predict_fear_instead_of_sadness += 1
+    else:
+        if prediction_text == "Prediction is: anger":
+            predict_anger_instead_of_sadness += 1
+        else:
+            if prediction_text == "Prediction is: joy":
+                predict_joy_instead_of_sadness += 1
+            else:
+                ok += 1
+
+print("-----------------------")
+print("predict_fear_instead_of_sadness: ", predict_fear_instead_of_sadness)
+print("predict_anger_instead_of_sadness: ", predict_anger_instead_of_sadness)
+print("predict_joy_instead_of_sadness: ", predict_joy_instead_of_sadness)
+print("ok: ", ok)
+
+print("-------------------------IT SHOULD BE FEAR-----------------------------")
+predict_sadness_instead_of_fear = 0
+predict_anger_instead_of_fear = 0
+predict_joy_instead_of_fear = 0
+ok = 0
+for i in range(0, len(forms_data_fear)):
+    print("User message: {}".format(forms_data_fear[i]))
+    predict_text(forms_data_fear[i])
+    prediction_score, prediction_text = predict_text(forms_data_fear[i])
+    print("Score: {}".format(prediction_score))
+    print("Prediction: {}".format(prediction_text))
+    print("\n")
+    if prediction_text == "Prediction is: sadness":
+        predict_sadness_instead_of_fear += 1
+    else:
+        if prediction_text == "Prediction is: anger":
+            predict_anger_instead_of_fear += 1
+        else:
+            if prediction_text == "Prediction is: joy":
+                predict_joy_instead_of_fear += 1
+            else:
+                ok += 1
+
+print("-----------------------")
+print("predict_sadness_instead_of_fear: ", predict_sadness_instead_of_fear)
+print("predict_anger_instead_of_fear: ", predict_anger_instead_of_fear)
+print("predict_joy_instead_of_fear: ", predict_joy_instead_of_fear)
+print("ok: ", ok)
+
+print("-------------------------IT SHOULD BE ANGER-----------------------------")
+predict_sadness_instead_of_anger = 0
+predict_fear_instead_of_anger = 0
+predict_joy_instead_of_anger = 0
+ok = 0
+for i in range(0, len(forms_data_anger)):
+    print("User message: {}".format(forms_data_anger[i]))
+    predict_text(forms_data_anger[i])
+    prediction_score, prediction_text = predict_text(forms_data_anger[i])
+    print("Score: {}".format(prediction_score))
+    print("Prediction: {}".format(prediction_text))
+    print("\n")
+    if prediction_text == "Prediction is: fear":
+        predict_fear_instead_of_anger += 1
+    else:
+        if prediction_text == "Prediction is: sadness":
+            predict_sadness_instead_of_anger += 1
+        else:
+            if prediction_text == "Prediction is: joy":
+                predict_joy_instead_of_anger += 1
+            else:
+                ok += 1
+
+print("-----------------------")
+print("predict_sadness_instead_of_anger: ", predict_sadness_instead_of_anger)
+print("predict_fear_instead_of_anger: ", predict_fear_instead_of_anger)
+print("predict_joy_instead_of_anger: ", predict_joy_instead_of_anger)
+print("ok: ", ok)
+
+print("-------------------------IT SHOULD BE JOY-----------------------------")
+predict_sadness_instead_of_joy = 0
+predict_anger_instead_of_joy = 0
+predict_fear_instead_of_joy = 0
+ok = 0
+for i in range(0, len(forms_data_joy)):
+    print("User message: {}".format(forms_data_joy[i]))
+    predict_text(forms_data_joy[i])
+    preidiction_score, prediction_text = predict_text(forms_data_joy[i])
+    print("Score: {}".format(prediction_score))
+    print("Prediction: {}".format(prediction_text))
+    print("\n")
+    if prediction_text == "Prediction is: fear":
+        predict_fear_instead_of_joy += 1
+    else:
+        if prediction_text == "Prediction is: anger":
+            predict_anger_instead_of_joy += 1
+        else:
+            if prediction_text == "Prediction is: sadness":
+                predict_sadness_instead_of_joy += 1
+            else:
+                ok += 1
+
+print("-----------------------")
+print("predict_sadness_instead_of_joy: ", predict_sadness_instead_of_joy)
+print("predict_fear_instead_of_joy: ", predict_fear_instead_of_joy)
+print("predict_anger_instead_of_joy: ", predict_anger_instead_of_joy)
+print("ok: ", ok)
+
+msg = 'I am afraid that I will not finish my project in time'
+_, text = predict_text(msg)
+print(text)
