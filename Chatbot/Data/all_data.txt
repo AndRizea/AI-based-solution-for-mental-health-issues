@@ -4434,6 +4434,25 @@
 40783	@SilkInSide @TommyJoeRatliff that's so pretty! I love the sky in the background and the purple highlights with the dull colors is great	sadness	0.088
 40784	@BluesfestByron second artist announcement looking good #bluesfest2017 #blues #Music #byronbay	sadness	0.083
 40785	I can literally eat creamy pesto pasta topped with grilled chicken, sun dried tomatoes, asparagus and pine nuts every single day of my life	sadness	0.083
+40786	the news is full of dying and suffering people... I can't stand it	sadness	0.083
+40787	I don't feel like going out these days. 	sadness	0.123
+40788	I failed a subject at my faculty 	sadness	0.093
+40789	I don t know what to do with my life anymore 	sadness	0.253
+40790	my cat died 2 weeks ago and I miss her so much... 	sadness	0.353
+40791	i feel like nothing excites me anymore, even the things i used to love doing... 	sadness	0.361
+40792	I can't do this anymore, I'm feeling helpless 😞 	sadness	0.36
+40793	i hate my life 	sadness	0.4
+40794	I’m not feeling well. 	sadness	0.25
+40795	I've had a rough day... 	sadness	0.125
+40796	I really wish she didn't leave... 	sadness	0.12
+40797	I am crying  	sadness	0.32
+40798	i feel alone and i don t know what to do  	sadness	0.42
+40799	My dog is not feeling well  	sadness	0.042
+40800	I really feel like crying right now…  	sadness	0.042
+40801	My grandfather died :(  	sadness	0.52
+40802	I miss my grand grandma  	sadness	0.52
+40803	I've had better days  	sadness	0.3
+40804	I had the worst day ever.  	sadness	0.45
 10941	At the point today where if someone says something remotely kind to me, a waterfall will burst out of my eyes	anger	NONE
 10942	@CorningFootball  IT'S GAME DAY!!!!      T MINUS 14:30  #relentless	anger	NONE
 10943	This game has pissed me off more than any other game this year. My blood is boiling! Time to turn it off! #STLCards	anger	NONE
