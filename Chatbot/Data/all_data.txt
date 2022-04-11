@@ -3648,6 +3648,12 @@
 30820	hate overthinking e v e r y t h i n g like i jus' wanna be happy pls	joy	0.040
 30821	People who cheer for sports teams completely outside of New Jersey or PA piss me off	joy	0.020
 30822	@DamnPatriot You're a POS for rejoicing in someone's death.	joy	0.019
+30823	Go back to school for music! I think I will in time happy	joy	0.019
+30824   Want to win a pet chick happy  Simply follow  retweet for your chance to win! Winners will be selected Sunday 23rd. Go	joy	0.019
+30825   Just win at weekend and it will be a late gift	joy	0.019
+30826   I got TH will add sim ant as a possible thanks happy	joy	0.019
+30827   The video will definitely be a 30 minute episode if not longer.	joy	0.019
+30828   The more I talk, the more confident I’ll feel and the better I’ll come across	joy	0.019
 40000	Depression sucks! #depression	sadness	0.958
 40001	Feeling worthless as always #depression	sadness	0.958
 40002	Feeling worthless as always 	sadness	0.958

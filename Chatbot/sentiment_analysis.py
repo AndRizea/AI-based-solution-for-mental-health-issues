@@ -233,6 +233,6 @@ def predict_text(text):
 # print("predict_anger_instead_of_joy: ", predict_anger_instead_of_joy)
 # print("ok: ", ok)
 #
-# msg = 'I will be happier when I will be more independent'
-# _, text = predict_text(msg)
-# print(text)
+msg = 'The more I talk, the more confident I’ll feel and the better I’ll come across'
+_, text = predict_text(msg)
+print(text)
