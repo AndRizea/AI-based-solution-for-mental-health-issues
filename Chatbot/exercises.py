@@ -1,17 +1,17 @@
 import chatbot_functions as chatbot_function
-import pandas as pd
 import time
 import sentiment_analysis
 
 bot = "CloudBot ☁: {0}"
 user = "USER: {0}"
 
+
 def thought_record(user_name):
     thought_record_replies = chatbot_function.get_data('thought_record_intro')
-    chatbot_function.get_reply(thought_record_replies, 3)
-    print(bot.format("Now I will let you do the steps from 1 to 3 for the next 3 minutes."))
+    chatbot_function.get_reply(username=user_name, data=thought_record_replies, time_sleep=3)
+    print(bot.format("Now I will let you do the steps from 1 to 3."))
     time.sleep(2)
-    print(bot.format("I can let to think more than 3 minutes, so take your time and reflect ✨"))
+    print(bot.format("In general, it takes between 1 and 3 minutes to complete them, but I encourage you to take your time and reflect ✨"))
     time.sleep(2)
     print(bot.format("I know that this activity can be emotionally consuming, so just type READY when you finish 😊"))
     ready = input()
@@ -54,7 +54,6 @@ def thought_record(user_name):
             time.sleep(1)
             print(bot.format("Don't forget to apply this exercise every time to feel overwhelmed by a thought."))
             time.sleep(1)
-            chatbot_function.goodbye()
         else:
             chatbot_function.recommend_supervised_help()
 
