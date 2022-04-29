@@ -11,6 +11,7 @@ from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LinearRegression
+import numpy as np
 
 
 # TEXT NORMALIZATION
@@ -129,3 +130,28 @@ def logistic_regression(X_train, y_train):
     model = LinearRegression()
     model.fit(X_train, y_train)
     return model
+
+
+def build_freqs(tweet_list, sentiment_list):
+    freqs = {}
+    for tweet, sentiment in zip(tweet_list, sentiment_list):
+        for word in tweet:
+            pair = (word, sentiment)
+            if pair in freqs:
+                freqs[pair] += 1
+            else:
+                freqs[pair] = 1
+    return freqs
+
+
+def tweet_to_freq(tweet, freqs):
+    x = np.zeros((4,))
+    for word in tweet:
+        if (word, 1) in freqs:
+            x[0] += freqs[(word, 1)]
+        if (word, 0) in freqs:
+            x[0] += freqs[(word, 0)]
+        if (word, 0.33) in freqs:
+            x[0] += freqs[(word, 0.33)]
+        if (word, 0.67) in freqs:
+            x[0] += freqs[(word, 0.67)]

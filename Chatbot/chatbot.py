@@ -25,9 +25,9 @@ if prediction < 0.33:
     response = input()
     if response.lower() == "yes":
         chatbot_function.suggestions(column="sadness", time_sleep=2)
-        chatbot_function.goodbye()
+        chatbot_function.goodbye(name)
     else:
-        chatbot_function.goodbye()
+        chatbot_function.goodbye(name)
 else:
     print(bot.format("Sorry, but for the moment I can't understand what are you really feeling. I will get better in the following period, I promise!"))
     print(bot.format("Until then, stay strong!"))

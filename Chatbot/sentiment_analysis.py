@@ -11,15 +11,17 @@ df_dataset.columns = ["id", "tweet_text", "sentiment", "threshold"]
 
 # distribution of sentiments in the training dataset
 sentiment_count = df_dataset["sentiment"].value_counts()
+print(sentiment_count)
 plt.pie(sentiment_count, labels=sentiment_count.index,
         autopct='%1.1f%%', shadow=True, startangle=140)
 plt.title("Distribution of sentiments in the training dataset")
-# plt.show()
+plt.show()
 
 df_training_anger = df_dataset[df_dataset["sentiment"] == "anger"]
 df_training_fear = df_dataset[df_dataset["sentiment"] == "fear"]
 df_training_joy = df_dataset[df_dataset["sentiment"] == "joy"]
 df_training_sadness = df_dataset[df_dataset["sentiment"] == "sadness"]
+
 
 # WordClouds - What are the words most often present in expressing a certain type of emotion?
 pos_tweets = df_dataset[df_dataset["sentiment"] == "anger"]
@@ -28,7 +30,7 @@ wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.title("Words used often to describe anger")
-# plt.show()
+plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "fear"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
@@ -36,7 +38,7 @@ wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.title("Words used often to describe fear")
-# plt.show()
+plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "joy"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
@@ -44,7 +46,7 @@ wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.title("Words used often to describe joy")
-# plt.show()
+plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "sadness"]
 txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
@@ -52,7 +54,7 @@ wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
 plt.title("Words used often to describe sadness")
-# plt.show()
+plt.show()
 
 # TEXT NORMALIZATION
 snowball_stemmer = SnowballStemmer('english')
@@ -72,13 +74,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                     random_state=0,
                                                     train_size=0.80)
 
-# print("Size of X_train: {}".format(len(X_train)))
-# print("Size of y_train: {}".format(len(y_train)))
-# print("\n")
-# print("Size of X_test: {}".format(len(X_test)))
-# print("Size of y_test: {}".format(len(y_test)))
-# print("\n")
-# print("Train proportion: {:.0%}".format(len(X_train) / (len(X_train) + len(X_test))))
+print("Size of X_train: {}".format(len(X_train)))
+print("Size of y_train: {}".format(len(y_train)))
+print("\n")
+print("Size of X_test: {}".format(len(X_test)))
+print("Size of y_test: {}".format(len(y_test)))
+print("\n")
+print("Train proportion: {:.0%}".format(len(X_train) / (len(X_train) + len(X_test))))
 
 tf_idf = function.fit_tfidf(X_train)
 X_train_tf = tf_idf.transform(X_train)

@@ -35,9 +35,9 @@ def greeting():
     return name
 
 
-def goodbye():
+def goodbye(username):
     goodbye_replies = get_data('goodbye')
-    get_reply(goodbye_replies, 2)
+    get_reply(username, goodbye_replies, 2)
 
 
 def recommend_supervised_help():
