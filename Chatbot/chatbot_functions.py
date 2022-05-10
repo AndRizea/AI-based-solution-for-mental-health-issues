@@ -1,9 +1,11 @@
 import time
+import sentiment_analysis
 import pandas as pd
 from numpy import nan
 from PIL import Image
+import os
 
-bot = "CloudBot ☁: {0}"
+bot = "{0}"
 user = "USER: {0}"
 
 
@@ -14,30 +16,23 @@ def get_data(column=None):
     return df_replies_selected
 
 
-def get_reply(username, data=None, time_sleep=None):
+def get_reply(data=None, time_sleep=None, username=None):
+    reply = ""
     for i in range(len(data)):
-        reply = data[i]
+        reply += data[i] + " "
         reply = reply.replace("USER_NAME", username)
-        print(bot.format(reply))
-        time.sleep(time_sleep)
+    print(reply)
+    return bot.format(reply)
 
 
-def greeting():
-    intro_replies = get_data('intro')
-    #get_reply(intro_replies, 3)
-    for i in range(len(intro_replies)):
-        reply = intro_replies[i]
-        print(bot.format(reply))
-        time.sleep(3)
-    name = input()
-    time.sleep(1)
-    print(bot.format("Nice to meet you, " + name + "! ☁"))
-    return name
+def greeting(text):
+    name = text
+    return bot.format("Nice to meet you, " + name + "! What is bothering you right now?")
 
 
-def goodbye(username):
+def goodbye(username=None):
     goodbye_replies = get_data('goodbye')
-    get_reply(username, goodbye_replies, 2)
+    return get_reply(goodbye_replies, 2, username)
 
 
 def recommend_supervised_help():
@@ -53,6 +48,3 @@ def suggestions(column, time_sleep):
         reply = df_replies_selected[i]
         print(bot.format(reply))
         time.sleep(time_sleep)
-
-
-
