@@ -114,6 +114,7 @@ html {
   padding: 15px 20px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  padding-right: 150px;
   box-shadow: var(--primaryBoxShadow);
 }
 

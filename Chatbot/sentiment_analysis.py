@@ -11,7 +11,6 @@ df_dataset.columns = ["id", "tweet_text", "sentiment", "threshold"]
 
 # distribution of sentiments in the training dataset
 sentiment_count = df_dataset["sentiment"].value_counts()
-print(sentiment_count)
 plt.pie(sentiment_count, labels=sentiment_count.index,
         autopct='%1.1f%%', shadow=True, startangle=140)
 plt.title("Distribution of sentiments in the training dataset")
@@ -29,7 +28,7 @@ txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
-plt.title("Words used often to describe anger")
+plt.title("Most common used words to describe anger")
 #plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "fear"]
@@ -37,7 +36,7 @@ txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
-plt.title("Words used often to describe fear")
+plt.title("Most common used words to describe fear")
 #plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "joy"]
@@ -45,7 +44,7 @@ txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
-plt.title("Words used often to describe joy")
+plt.title("Most common used words to describe joy")
 #plt.show()
 
 pos_tweets = df_dataset[df_dataset["sentiment"] == "sadness"]
@@ -53,7 +52,7 @@ txt = " ".join(tweet.lower() for tweet in pos_tweets["tweet_text"])
 wordcloud = WordCloud().generate(txt)
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
-plt.title("Words used often to describe sadness")
+plt.title("Most common used words to describe sadness")
 #plt.show()
 
 # TEXT NORMALIZATION
@@ -85,7 +84,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
 tf_idf = function.fit_tfidf(X_train)
 X_train_tf = tf_idf.transform(X_train)
 X_test_tf = tf_idf.transform(X_test)
-final_model = function.logistic_regression(X_train_tf, y_train)
+final_model = function.linear_regression(X_train_tf, y_train)
 
 user_text = "The war in Ukraine is getting more and more deadly, I wish I could help more people 🙁"
 

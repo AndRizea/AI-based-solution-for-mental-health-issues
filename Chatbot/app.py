@@ -1,14 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 import time
 import Chatbot
+from Sadness import Sadness
 
 app = Flask(__name__)
-chatbot = Chatbot.Chatbot()
+chatbot = Chatbot.Chatbot(Sadness)
 
 
 @app.get("/")
 def index_get():
     return render_template("base.html")
+
 
 @app.post("/predict")
 def predict():
@@ -23,6 +25,7 @@ def predict():
     message = {"answer": response}
     time.sleep(0.5)
     return jsonify(message)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

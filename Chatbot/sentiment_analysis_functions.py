@@ -126,7 +126,7 @@ def plot_confusion(cm):
     return sn
 
 
-def logistic_regression(X_train, y_train):
+def linear_regression(X_train, y_train):
     model = LinearRegression()
     model.fit(X_train, y_train)
     return model
