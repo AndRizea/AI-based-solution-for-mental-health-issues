@@ -15,6 +15,11 @@ def get_data(column=None):
     df_replies_selected = [item for item in df_replies_selected if str(item) != 'nan']
     return df_replies_selected
 
+def get_probing_questions():
+    df_replies = pd.read_csv("Data/replies.csv")
+    df_questions = df_replies['thought_record_probing_questions']
+    return df_questions
+
 
 def get_reply(data=None, time_sleep=None, username=None):
     reply = ""

@@ -2,12 +2,45 @@
 <html lang="en">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+
 <head>
     <meta charset="UTF-8">
     <title>Chatbot</title>
 </head>
 <body>
 <div class="container">
+  <!-- Navigation -->
+  <header> <a href="">
+    <h4 class="logo">CloudBot&nbsp;☁&nbsp;</h4>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#report">GET REPORT&nbsp;&nbsp;</a></li>
+        <li> <a href="#contact">CONTACT OUR TEAM</a></li>
+      </ul>
+    </nav>
+  </header>
+    <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <h2 class="hero_header">Cognitive Behavioral Therapy <span class="light">CHATBOT</span></h2>
+    <p class="tagline">Your 2am online friend</p>
+  </section>
+    <!-- About Section -->
+  <section class="about" id="about">
+	 <h2 class="hidden">About</h2>
+    <p class="text_column">Cognitive behavioural therapy (CBT) is a talking therapy that can help you manage your problems by changing the way you think and behave. It's most commonly used to treat anxiety and depression, but can be useful for other mental and physical health problems. </p>
+	<p class="text_column">There are numerous cognitive behavioural therapy techniques, all aimed at altering self-defeating thoughts, overwhelming emotions, and ineffective behavior. Our team designed an AI-chatbot, named CloudBot, which was trained to conduct cognitive reconstructuring exercises. </p>
+	<p class="text_column">Cognitive restructuring is aimed at learning to recognize dysfunctional thought patterns and develop more rational ways of understanding challenging situations.  Cognitive restructuring is a collection of different techniques to help improve your thinking. Cognitive restructuring techniques can include tracking thoughts during difficult situations, identifying cognitive distortions, and engaging in behavioural experiments to test out whether your thoughts are true. </p>
+  </section>
+
+  <!-- Parallax Section -->
+  <section class="banner">
+    <h2 class="parallax">About CloudBot</h2>
+    <p class="parallax_description">CloudBot is a innocent cloud designed by our team. He is hero for you whenever you need.</p>
+  </section>
+    <!-- Copyrights Section -->
+  <div class="copyright">&copy;2022- <strong>CloudBot</strong></div>
+<div class="container" >
     <div class="chatbox">
         <div class="chatbox__support">
             <div class="chatbox__header">
@@ -43,6 +76,6 @@
         $SCRIPT_ROOT = {{ request.script_root|tojson }};
     </script>
     <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
-
+</div>
 </body>
 </html>
