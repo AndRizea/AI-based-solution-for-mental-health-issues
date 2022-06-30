@@ -3,6 +3,7 @@ import sentiment_analysis
 from Sadness import Sadness
 import time
 import json
+import report
 
 
 def identify_sentiment(text):
@@ -120,6 +121,7 @@ class Chatbot(Sadness):
                 end_time = time.localtime()
                 self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
                 export_conv_history(self.conversation_history)
+                report.generate_graph_report('conversation_history.json')
             return sadness.handle_better_action(self.name, sadness.is_better_action, text)
 
         self.conversation_history[self.reply] = text
@@ -136,6 +138,7 @@ class Chatbot(Sadness):
             end_time = time.localtime()
             self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
             export_conv_history(self.conversation_history)
+            report.generate_graph_report('conversation_history.json')
             return chatbot_function.goodbye(self.name)
 
         self.conversation_history[self.reply] = text
@@ -266,13 +269,14 @@ class Chatbot(Sadness):
         if self.phase == 2.53:
             scenario = "END"
             final_prediction = identify_sentiment(alternative_thought)
-            if 0.7 >= final_prediction > prediction:
+            if 0.7 >= final_prediction:
                 self.reply = sadness.recommend_supervised_help(self.name)
             else:
                 self.reply = sadness.congratulations(self.name)
             end_time = time.localtime()
             self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
             export_conv_history(self.conversation_history)
+            report.generate_graph_report('conversation_history.json')
             return self.reply
 
 

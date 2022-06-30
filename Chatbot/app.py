@@ -17,6 +17,11 @@ def index_get_team():
     return render_template("team.html")
 
 
+@app.get("/report")
+def index_get_report():
+    return render_template("report.html")
+
+
 @app.post("/predict")
 def predict():
     text = request.get_json().get("message")
