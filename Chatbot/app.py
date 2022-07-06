@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import time
 import Chatbot
-from Sadness import Sadness
+from Scenario import Scenario
+
 
 app = Flask(__name__)
-chatbot = Chatbot.Chatbot(Sadness)
+chatbot = Chatbot.Chatbot(Scenario)
 
 
 @app.get("/")
