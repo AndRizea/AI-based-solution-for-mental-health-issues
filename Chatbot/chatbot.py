@@ -1,9 +1,10 @@
 import chatbot_functions as chatbot_function
 import sentiment_analysis
 from Scenario import Scenario
-import time
+from datetime import datetime
 import json
 import report
+import os
 
 
 def identify_sentiment(text):
@@ -13,12 +14,11 @@ def identify_sentiment(text):
 
 
 def export_conv_history(dictionary):
-    with open("conversation_history.json", 'w') as outfile:
+    with open("static/conversation_history.json", 'w') as outfile:
         json.dump(dictionary, outfile)
 
 
 class Chatbot(Scenario):
-    phase = 0
     bot = "{0}"
     user = "USER: {0}"
 
@@ -28,7 +28,13 @@ class Chatbot(Scenario):
         self.name = username
         self.phase = 0
         self.conversation_history = {}
+        export_conv_history(self.conversation_history)
         self.reply = ""
+        self.is_image = True
+
+        if self.is_image and os.path.exists('static/images/report.png'):
+            os.remove("static/images/report.png")
+            self.is_image = False
 
     def explain_reason_sadness(self):
         text = ""
@@ -38,16 +44,13 @@ class Chatbot(Scenario):
 
     def talk(self, text):
         print("phase= " + str(self.phase))
-        # reply = ""
-        # scenario = ""
 
         if self.phase == 0:
-            start_time = time.localtime()
-            self.conversation_history['start_time'] = time.strftime("%H:%M:%S", start_time)
+            start_time = datetime.now()
+            self.conversation_history['start_time'] = start_time.strftime("%d %B, %Y, %H:%M:%S")
             self.phase = self.phase + 1
             self.name = text.capitalize()
             self.conversation_history['username'] = self.name
-
             self.reply = chatbot_function.greeting(self.name)
 
             return self.reply
@@ -63,7 +66,7 @@ class Chatbot(Scenario):
 
         if self.phase == 1:
             if prediction < 0.67:
-                #scenario = "ANXIETY & DEPRESSION"
+                # scenario = "ANXIETY & DEPRESSION"
                 self.phase = self.phase + 1
             elif 0.67 <= prediction < 0.8:
                 self.phase = self.phase + 2
@@ -118,10 +121,10 @@ class Chatbot(Scenario):
             self.phase = round(self.phase + 0.01, 3)
             self.reply = sadness.handle_better_action(self.name, sadness.is_better_action, text)
             if not sadness.continue_conversation:
-                end_time = time.localtime()
-                self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
+                end_time = datetime.now()
+                self.conversation_history['end_time'] = end_time.strftime("%d %B, %Y, %H:%M:%S")
                 export_conv_history(self.conversation_history)
-                report.generate_graph_report('conversation_history.json')
+                report.generate_graph_report('static/conversation_history.json')
             return sadness.handle_better_action(self.name, sadness.is_better_action, text)
 
         self.conversation_history[self.reply] = text
@@ -135,10 +138,10 @@ class Chatbot(Scenario):
 
         if self.phase == 2.33:
             self.reply = chatbot_function.goodbye(self.name)
-            end_time = time.localtime()
-            self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
+            end_time = datetime.now()
+            self.conversation_history['end_time'] = end_time.strftime("%d %B, %Y, %H:%M:%S")
             export_conv_history(self.conversation_history)
-            report.generate_graph_report('conversation_history.json')
+            report.generate_graph_report('static/conversation_history.json')
             return chatbot_function.goodbye(self.name)
 
         self.conversation_history[self.reply] = text
@@ -262,10 +265,10 @@ class Chatbot(Scenario):
                 self.reply = sadness.recommend_supervised_help(self.name)
             else:
                 self.reply = sadness.congratulations(self.name)
-            end_time = time.localtime()
-            self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
+            end_time = datetime.now()
+            self.conversation_history['end_time'] = end_time.strftime("%d %B, %Y, %H:%M:%S")
             export_conv_history(self.conversation_history)
-            report.generate_graph_report('conversation_history.json')
+            report.generate_graph_report('static/conversation_history.json')
             return self.reply
 
         if self.phase == 4:
@@ -289,19 +292,17 @@ class Chatbot(Scenario):
                 return self.reply
             else:
                 self.reply = chatbot_function.goodbye(self.name)
-                end_time = time.localtime()
-                self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
+                end_time = datetime.now()
+                self.conversation_history['end_time'] = end_time.strftime("%d %B, %Y, %H:%M:%S")
                 export_conv_history(self.conversation_history)
-                report.generate_graph_report('conversation_history.json')
+                report.generate_graph_report('static/conversation_history.json')
                 return chatbot_function.goodbye(self.name)
 
         if self.phase == 4.3:
             self.reply = chatbot_function.goodbye(self.name)
-            end_time = time.localtime()
-            self.conversation_history['end_time'] = time.strftime("%H:%M:%S", end_time)
+            end_time = datetime.now()
+            self.conversation_history['end_time'] = end_time.strftime("%d %B, %Y, %H:%M:%S")
             export_conv_history(self.conversation_history)
-            report.generate_graph_report('conversation_history.json')
+            report.generate_graph_report('static/conversation_history.json')
+            self.phase = 0
             return chatbot_function.goodbye(self.name)
-
-
-

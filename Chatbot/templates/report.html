@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='report_style.css') }}">
+
+
+
 <head>
     <meta charset="UTF-8">
     <title>Report</title>
 </head>
 <body>
-    <h1>Generated report based on the conversation with the CloudBot</h1>
-    <img src="../report.png" >
+<div class="container">
+  <header> <a href="/">
+    <h4 class="logo">CLOUDBOT ☁</h4>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="report">REPORT</a></li>
+        <li><a href="team">CONTACT OUR TEAM</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <div class="section-articles">
+        <article class="left_article"><h3>Generated report based on the conversation with the CloudBot</h3></article></div>
+        <img src="../static/images/report.png" style="float:left" >
+        <p style="padding:40px; font-size:17px">Get your conversation with CloudBot <a href="../static/conversation_history.json" download="conversation_history.json">from here.</a></p>
+
+</div>
+  <section class="banner">
+    <div>
+        <h2 class="parallax">About generated report</h2>
+        <p class="parallax_description">CloudBot is constantly trying to make you feel better. </p>
+        <p class="parallax_description">In case that you might want to track your progress, this report is the perfect solution. </p>
+        <p class="parallax_description"><strong>IMPORTANT!</strong></p>
+        <p class="parallax_description">The graph and the file containing the conversation with the bot will be available only after you finish to talk with CloudBot.</p>
+    </div>
+  </section>
+    <!-- Copyrights Section -->
+  <div class="copyright">&copy;2022- <strong>CloudBot</strong></div>
 </body>
 </html>

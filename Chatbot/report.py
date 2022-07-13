@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plot
+from matplotlib.pyplot import figure
 import sentiment_analysis
 import json
 
@@ -34,6 +35,7 @@ def generate_graph_report(filename):
     plot.plot(xAxis, yAxis, color='#4DBEEE', marker='p')
     plot.xlabel('Answers')
     plot.ylabel('Sentiment prediction')
-    plot.savefig('report.png')
+    plot.xticks(xAxis, rotation='vertical')
+    plot.savefig('static/images/report.png', dpi=130)
     plot.show()
 
