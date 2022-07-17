@@ -37,5 +37,5 @@ def generate_graph_report(filename):
     plot.ylabel('Sentiment prediction')
     plot.xticks(xAxis, rotation='vertical')
     plot.savefig('static/images/report.png', dpi=130)
-    plot.show()
+    #plot.show()
 

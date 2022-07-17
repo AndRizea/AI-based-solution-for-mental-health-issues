@@ -12,6 +12,8 @@ from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LinearRegression
 import numpy as np
+import pickle
+from os.path import exists
 
 
 # TEXT NORMALIZATION
@@ -127,8 +129,14 @@ def plot_confusion(cm):
 
 
 def linear_regression(X_train, y_train):
-    model = LinearRegression()
-    model.fit(X_train, y_train)
+    filename = "finalized_model.sav"
+    if exists(filename):
+        model = pickle.load(open(filename,"rb"))
+    else:
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+        pickle.dump(model, open(filename,"wb"))
+
     return model
 
 

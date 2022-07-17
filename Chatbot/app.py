@@ -26,15 +26,9 @@ def index_get_report():
 @app.post("/predict")
 def predict():
     text = request.get_json().get("message")
-    # text=""
-    # text += temp
-    # while temp!="":
-    #     temp = request.get_json().get("message")
-    #     text += temp
-    # TODO: check if text is valid
     response = chatbot.talk(text)
     message = {"answer": response}
-    time.sleep(0.5)
+    #time.sleep(0.5)
     return jsonify(message)
 
 

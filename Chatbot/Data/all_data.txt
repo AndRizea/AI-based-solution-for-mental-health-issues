@@ -3654,6 +3654,15 @@
 30826	I got TH will add sim ant as a possible thanks happy	joy	0.019
 30827	The video will definitely be a 30 minute episode if not longer.	joy	0.019
 30828	The more I talk, the more confident I’ll feel and the better I’ll come across	joy	0.019
+30829	I cannot wait to go on holiday!!!	joy	0.542
+30830	I will go on a trip to Venice next week!	joy	0.542
+30831	I love ice cream	joy	0.542
+30832	I cannot wait to go on holiday!!!	joy	0.542
+30833	I love travelling	joy	0.542
+30834	Going for a walk always helps me to be in a better mode	joy	0.542
+30835	I am happy	joy	0.542
+30836	I love my friends	0.542
+30836	I love my family	0.542
 40000	Depression sucks! #depression	sadness	0.958
 40001	Feeling worthless as always #depression	sadness	0.958
 40002	Feeling worthless as always 	sadness	0.958

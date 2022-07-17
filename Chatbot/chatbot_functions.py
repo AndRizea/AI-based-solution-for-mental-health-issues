@@ -36,8 +36,8 @@ def greeting(text):
     return bot.format("Nice to meet you, " + name + "! What is bothering you right now?")
 
 
-def goodbye(username=None):
+def goodbye(username=None, user_input=None):
     goodbye_replies = get_data('goodbye')
-    return get_reply(goodbye_replies, username)
+    return get_reply(goodbye_replies, username), None
 
 
